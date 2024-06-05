@@ -1,8 +1,13 @@
 const checkbox = document.getElementById('checkbox');
 const password = document.getElementById('password');
+const alert = document.querySelectorAll('.alert');
 
+setTimeout(() => {
+    alert.forEach(element => {
+        element.remove();
+    });
+}, 1500)
 
-console.log(checkbox.type)
 
 checkbox.addEventListener('click', () => {
     if(password.type == "password"){

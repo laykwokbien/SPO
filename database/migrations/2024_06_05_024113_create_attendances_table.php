@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('attendances', function (Blueprint $table) {
-            $table->id('attendance_id');
+            $table->id();
             $table->foreignId('user_id')->references('id')->on("users");
             $table->date('date');
             $table->time('time_in');

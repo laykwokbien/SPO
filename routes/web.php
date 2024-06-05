@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', [ControllerUser::class, 'home']);
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [ControllerUser::class, 'loginpg']);
     Route::post('/login', [ControllerUser::class, 'login']);
@@ -21,8 +24,5 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        $page = 'dashboard';
-        return view('index', compact('page'));
-    });
+    Route::get('/dashboard', [ControllerUser::class, 'dashboard']);
 });
