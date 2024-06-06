@@ -21,12 +21,9 @@ class ControllerUser extends Controller
     public function register()
     {
         $validator = Validator::make(request()->all(), [
-            'email' => 'required|unique:users,email',
-            'username' => 'required',
+            'username' => 'required|unique:users,username',
             'password' => 'required',
         ], [
-            'email.required' => 'Harap isi Email Anda',
-            'email.unique' => 'Email telah digunakan',
             'username.required' => 'Harap isi Username Anda',
             'password.required' => 'Harap isi Password Anda'
         ]);
@@ -49,7 +46,7 @@ class ControllerUser extends Controller
         $page = array(
             'name' => 'auth'
         );
-        return view('user.login', compact('name'));
+        return view('user.login', compact('page'));
     }
 
     public function login()
@@ -75,6 +72,14 @@ class ControllerUser extends Controller
         $page = array(
             'name' => 'home'
         );
-        return view('/', compact('page'));
+        return view('index', compact('page'));
+    }
+
+    public function logout() {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

@@ -5,10 +5,20 @@
     --quadary-color: #EEF5FF;
 }
 
+@font-face {
+    font-family: Jost;
+    src: url('../Jost.ttf');
+}
+
 *{
     margin: 0;
     padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Jost';
 }
+
+/* Auth */
 
 .bg-auth{
     background-image: url('../images/auth_bg.jpg');
@@ -21,6 +31,12 @@ div form{
     height: 100%;
 }
 
+.auth-logo{
+    width: 150px;
+    height: 150px;
+    z-index: 10000;
+}
+
 @media only screen and (max-width:578px){
     div form{
         height: fit-content;
@@ -28,4 +44,16 @@ div form{
         backdrop-filter: 50px;
 
     }
+}
+
+/* NavBar */
+nav{
+    width: 150px;
+    background-color: var(--secondary-color);
+}
+
+.nav-brand img{
+    border-radius: 50%;
+    width: 125px;
+    height: 125px;
 }
