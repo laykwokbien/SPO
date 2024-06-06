@@ -38,7 +38,7 @@ class ControllerKaryawan extends Controller
             'jabatan.required' => 'Dimohon isi Jabatan Karyawan',
             'email.required' => 'Dimohon isi Email Karyawan',
             'email.unique' => 'Email ini sudah digunakan oleh Karyawan Lain',
-            'password.unique' => 'Dimohon isi password'
+            'password.required' => 'Dimohon isi password'
         ]);
 
         if ($validator->fails()) {
@@ -76,7 +76,7 @@ class ControllerKaryawan extends Controller
             'jabatan.required' => 'Dimohon isi Jabatan Karyawan',
             'email.required' => 'Dimohon isi Email Karyawan',
             'email.unique' => 'Email ini sudah digunakan oleh Karyawan Lain',
-            'password.unique' => 'Dimohon isi password'
+            'password.required' => 'Dimohon isi password'
         ]);
 
         if ($validator->fails()) {

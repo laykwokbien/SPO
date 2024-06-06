@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
+use App\Models\Presensi;
 use App\Models\users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,12 +72,15 @@ class ControllerUser extends Controller
     public function home()
     {
         $page = array(
-            'name' => 'home'
+            'name' => 'home',
+            'karyawan' => Karyawan::get(),
+            'presensi' => Presensi::get()
         );
         return view('index', compact('page'));
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();

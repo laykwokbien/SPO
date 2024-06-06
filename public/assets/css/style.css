@@ -6,8 +6,13 @@
 }
 
 @font-face {
-    font-family: Jost;
-    src: url('../Jost.ttf');
+    font-family: Lato;
+    src: url('../Lato.ttf');
+}
+
+@font-face {
+    font-family: Barlow;
+    src: url('../Barlow.ttf');
 }
 
 *{
@@ -15,7 +20,7 @@
     padding: 0;
     text-decoration: none;
     list-style: none;
-    font-family: 'Jost';
+    font-family: 'Lato';
 }
 
 /* Auth */
@@ -26,7 +31,7 @@
     background-size: cover;
 }
 
-div form{
+.auth{
     background: var(--tritary-color);
     height: 100%;
 }
@@ -34,11 +39,11 @@ div form{
 .auth-logo{
     width: 150px;
     height: 150px;
-    z-index: 10000;
+    z-index: 9999;
 }
 
 @media only screen and (max-width:578px){
-    div form{
+    .auth{
         height: fit-content;
         padding: 25px 0px 25px 0px;
         backdrop-filter: 50px;
@@ -48,7 +53,8 @@ div form{
 
 /* NavBar */
 nav{
-    width: 150px;
+    padding: 0 5px;
+    width: 140px;
     background-color: var(--secondary-color);
 }
 
@@ -56,4 +62,78 @@ nav{
     border-radius: 50%;
     width: 125px;
     height: 125px;
+}
+
+#extendbtn{
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+#menu{
+    margin-top: 5px;
+    display: none;
+    padding: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--tritary-color);
+    border-radius: 10px;
+    gap: 5px;
+    padding: 11.5px 0;
+}
+
+#menu li {
+    width: 100%;
+}
+#menu li a:hover{
+    width: 100%;
+    background-color: var(--quadary-color);
+}
+
+#arrowleft{
+    content: "";
+    width: 9px;
+    height: 1.8px;
+    background-color: black;
+    position: absolute;
+    transform: rotate(55deg);
+    bottom: 11px;
+    right: 26px;
+    transition: all 0.5s;
+}
+
+#arrowright{
+    content: "";
+    width: 9px;
+    height: 1.8px;
+    background-color: black;
+    position: absolute;
+    transform: rotate(-55deg);
+    bottom: 11px;
+    transition: all 0.5s;
+    right: 20.2px;
+}
+
+/* Dashboard */
+.information div{
+    padding: 20px 30px;
+    color: aliceblue;
+}
+
+.information div:nth-child(1){
+    background-color: #a30b37;
+}
+
+.information div:nth-child(2){
+    background-color: #370926;
+}
+
+.currentschedule{
+    padding: 50px 50px;
+    color: aliceblue;
+}
+
+.currentschedule p:nth-child(1){
+    font-size: 25px;
 }

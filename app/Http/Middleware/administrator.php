@@ -18,9 +18,10 @@ class administrator
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        if($user->role != 'administrator'){
+        if ($user->role != 'administrator') {
             return back();
         }
+
         return $next($request);
     }
 }

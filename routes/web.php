@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ControllerUser::class, 'home']);
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [ControllerUser::class, 'loginpg']);
+    Route::get('/login', [ControllerUser::class, 'loginpg'])->name('login');
     Route::post('/login', [ControllerUser::class, 'login']);
     Route::get('/register', [ControllerUser::class, 'registerpg']);
     Route::post('/register', [ControllerUser::class, 'register']);
@@ -30,8 +30,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ControllerUser::class, 'dashboard']);
     Route::get('/logout', [ControllerUser::class, 'logout']);
-    
-    Route::middleware('administrator')->group(function (){
+
+    Route::middleware('administrator')->group(function () {
         // CRUD Karyawan
         Route::get('/karyawan', [ControllerKaryawan::class, 'page']);
         Route::get('/karyawan/create', [ControllerKaryawan::class, 'createpg']);
@@ -41,12 +41,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/karyawan/delete/{id}', [ControllerKaryawan::class, 'confirm']);
         Route::post('/karyawan/delete/{id}', [ControllerKaryawan::class, 'delete']);
         // CRUD Presence
-        Route::get('/prensence', [ControllerPresense::class, 'page']);
-        Route::get('/prensence/create', [ControllerPresense::class, 'createpg']);
-        Route::post('/prensence/create', [ControllerPresense::class, 'create']);
-        Route::get('/prensence/update/{id}', [ControllerPresense::class, 'updatepg']);
-        Route::post('/prensence/update/{id}', [ControllerPresense::class, 'update']);
-        Route::get('/prensence/delete/{id}', [ControllerPresense::class, 'confirm']);
-        Route::post('/prensence/delete/{id}', [ControllerPresense::class, 'delete']);
+        Route::get('/presence', [ControllerPresense::class, 'page']);
+        Route::get('/presence/create', [ControllerPresense::class, 'createpg']);
+        Route::post('/presence/create', [ControllerPresense::class, 'create']);
+        Route::get('/presence/update/{id}', [ControllerPresense::class, 'updatepg']);
+        Route::post('/presence/update/{id}', [ControllerPresense::class, 'update']);
+        Route::get('/presence/delete/{id}', [ControllerPresense::class, 'confirm']);
+        Route::post('/presence/delete/{id}', [ControllerPresense::class, 'delete']);
     });
 });

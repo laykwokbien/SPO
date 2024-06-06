@@ -18,7 +18,7 @@
                 <div class="position-absolute mt-3 col-xl-3 col-lg-4 col-sm-6 d-sm-flex d-none justify-content-center">
                     <img class="auth-logo" src="{{ asset('assets/images/company_logo_no_background.png') }}" alt="Company's Logo" draggable="false">
                 </div>
-                <form class="col-xl-3 col-lg-4 col-sm-6 d-flex flex-column justify-content-center px-5" method="post">
+                <form class="col-xl-3 col-lg-4 col-sm-6 d-flex flex-column justify-content-center px-5 auth" method="post">
                     @csrf
                     <h1>Login</h1>
                     <div class="mb-3">
