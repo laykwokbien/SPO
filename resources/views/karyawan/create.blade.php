@@ -12,7 +12,7 @@
         @endif
     </div>
     {{-- Form --}}
-    <div class="container mt-5">
+    <div class="container d-flex w-100 justify-content-center mt-5">
         <form class="w-25" method="post">
             @csrf
             <div class="mb-3">
@@ -27,7 +27,15 @@
                 <label for="email" class="form-label">Email: </label>
                 <input type="email" class="form-control" name="email" id="email">
             </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password: </label>
+                <input type="password" class="form-control" name="password" id="password">
+                <input type="checkbox" name="checkbox" id="checkbox" class="form-check-input">
+                <label for="checkbox" class="form-check-label">Show Password</label>
+            </div>
             <button class="btn btn-primary" type="submit" id="submit">Tambahkan</button>
         </form>
     </div>
+    <a href="{{ url('/karyawan') }}" class="form-back"><i class='arrowleft-tail'></i>Back</a>
+
 @endsection

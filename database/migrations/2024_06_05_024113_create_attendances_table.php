@@ -18,8 +18,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on("users");
             $table->date('date');
-            $table->time('time_in');
-            $table->time('time_out');
+            $table->time('time_in')->nullable();
+            $table->time('time_out')->nullable();
             $table->timestamps();
         });
     }

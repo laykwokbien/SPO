@@ -12,4 +12,8 @@ class users extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $guarded = ['id'];
+
+    public function isData(){
+        return $this->hasOne(Karyawan::class, 'password');
+    }
 }

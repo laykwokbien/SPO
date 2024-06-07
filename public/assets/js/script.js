@@ -4,7 +4,15 @@ alert = document.querySelectorAll('.alert'),
 arrowleft = document.getElementById('arrowleft'),
 arrowright = document.getElementById('arrowright'),
 dropdownmenu = document.getElementById('menu'),
+info = document.querySelectorAll('.info-child'),
 user = document.getElementById('extendbtn');
+
+let infocolor = [
+    '#ef476f',
+    '#ffd166',
+    '#06d6a0',
+];
+
 
 setTimeout(() => {
     alert.forEach(element => {
@@ -44,3 +52,11 @@ if(user != null){
         }
     })
 }
+
+if (info != null){
+    for (let i = 0; i <= info.length - 1; i++){
+        info[i].style.backgroundColor = infocolor[i];
+        console.log(info[i].style.backgroundColor)
+    }
+}
+

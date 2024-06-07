@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
+use App\Models\users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ControllerKaryawan extends Controller
@@ -13,7 +15,6 @@ class ControllerKaryawan extends Controller
         $page = array(
             'name' => 'karyawan',
             'data' => Karyawan::get(),
-            'delete' => false
         );
         return view('karyawan.index', compact('page'));
     }
@@ -31,7 +32,7 @@ class ControllerKaryawan extends Controller
         $validator = Validator::make(request()->all(), [
             'nama' => 'required',
             'jabatan' => 'required',
-            'email' => 'required|unique:karyawan,email',
+            'email' => 'required|unique:karyawans,email',
             'password' => 'required'
         ], [
             'nama.required' => 'Dimohon isi Nama Karyawan',
@@ -44,15 +45,22 @@ class ControllerKaryawan extends Controller
         if ($validator->fails()) {
             return back()->with('alerts', $validator->messages()->get('*'));
         }
+        
+        $users = users::get();
 
-        Karyawan::create([
-            'nama' => request()->input('nama'),
-            'jabatan' => request()->input('jabatan'),
-            'email' => request()->input('email'),
-            'password' => bcrypt(request()->input('password'))
-        ]);
-
-        return redirect('/karyawan')->with('success', 'Data Karyawan berhasil untuk ditambahkan');
+        foreach($users as $user){
+            if(password_verify(request()->input('password'), $user->password)){
+                $foreign = $user->id;
+                Karyawan::create([
+                    'nama' => request()->input('nama'),
+                    'jabatan' => request()->input('jabatan'),
+                    'email' => request()->input('email'),
+                    'password' => $foreign,
+                ]);
+                return redirect('/karyawan')->with('success', 'Data Karyawan berhasil untuk ditambahkan');
+            }
+        }
+        return back()->with('false', "Silakan Coba Ulang Lagi");
     }
 
     public function updatepg($id)
@@ -66,47 +74,63 @@ class ControllerKaryawan extends Controller
 
     public function update($id)
     {
-        $validator = Validator::make(request()->all(), [
-            'nama' => 'required',
-            'jabatan' => 'required',
-            'email' => 'required|unique:karyawan,email,' . $id,
-            'password' => 'required'
-        ], [
-            'nama.required' => 'Dimohon isi Nama Karyawan',
-            'jabatan.required' => 'Dimohon isi Jabatan Karyawan',
-            'email.required' => 'Dimohon isi Email Karyawan',
-            'email.unique' => 'Email ini sudah digunakan oleh Karyawan Lain',
-            'password.required' => 'Dimohon isi password'
-        ]);
+        $karyawan = Karyawan::find($id);
 
-        if ($validator->fails()) {
-            return back()->with('alerts', $validator->messages()->get('*'));
+        if (Auth::user()->role == 'karyawan'){
+            $validator = Validator::make(request()->all(), [
+                'nama' => 'required',
+                'jabatan' => 'required',
+                'email' => 'required|unique:karyawans,email,' . $id,
+                'password' => 'required'
+            ], [
+                'nama.required' => 'Dimohon isi Nama Karyawan',
+                'jabatan.required' => 'Dimohon isi Jabatan Karyawan',
+                'email.required' => 'Dimohon isi Email Karyawan',
+                'email.unique' => 'Email ini sudah digunakan oleh Karyawan Lain',
+                'password.required' => 'Dimohon isi password'
+            ]);
+    
+            if ($validator->fails()) {
+                return back()->with('alerts', $validator->messages()->get('*'));
+            }
+        
+            if(password_verify(request()->input('password'), $karyawan->password)){
+                return redirect()->with('false', 'Password salah silakan ulang lagi');
+            }
+            
+            Karyawan::where('id', $id)->update([
+                'nama' => request()->input('nama'),
+                'jabatan' => request()->input('jabatan'),
+                'email' => request()->input('email'),
+                'password' => bcrypt(request()->input('password'))
+            ]);
+        }
+        if(Auth::user()->role == 'administrator'){
+            $validator = Validator::make(request()->all(), [
+                'nama' => 'required',
+                'jabatan' => 'required',
+                'status' => 'required',
+                'email' => 'required|unique:karyawans,email,' . $id,
+            ], [
+                'nama.required' => 'Dimohon isi Nama Karyawan',
+                'jabatan.required' => 'Dimohon isi Jabatan Karyawan',
+                'status.required' => 'Status Karyawan harap diisi',
+                'email.required' => 'Dimohon isi Email Karyawan',
+                'email.unique' => 'Email ini sudah digunakan oleh Karyawan Lain',
+            ]);
+    
+            if ($validator->fails()) {
+                return back()->with('alerts', $validator->messages()->get('*'));
+            }
+            
+            Karyawan::where('id', $id)->update([
+                'nama' => request()->input('nama'),
+                'jabatan' => request()->input('jabatan'),
+                'email' => request()->input('email'),
+                'status' => request()->input('status')
+            ]);
         }
 
-        Karyawan::where('id', $id)->update([
-            'nama' => request()->input('nama'),
-            'jabatan' => request()->input('jabatan'),
-            'email' => request()->input('email'),
-            'password' => bcrypt(request()->input('password'))
-        ]);
-
         return redirect('/karyawan')->with('success', 'Data Karyawan berhasil untuk diperbarui');
-    }
-
-    public function confirm($id)
-    {
-        $page = array(
-            'name' => 'karyawan',
-            'data' => Karyawan::get(),
-            'delete' => true
-        );
-        return view('karyawan.index', compact('page'));
-    }
-
-    public function delete($id)
-    {
-        Karyawan::where('id', $id)->delete();
-
-        return redirect('/karyawan')->with('success', 'Data Karyawan berhasil untuk dihapus');
     }
 }

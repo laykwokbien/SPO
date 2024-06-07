@@ -32,8 +32,6 @@
                         <label for="checkbox" class="form-check-label">Show Password</label>
                     </div>
                     <button type="submit" name="submit" class="btn btn-primary">Login</button>
-                    <hr>
-                    <span class="text-center">Don't have a account? <a href="{{ url('/register') }}">Register</a></span>
                 </form>
             </div>
         </div>

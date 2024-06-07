@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
 use App\Models\Presensi;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use PDO;
 
@@ -11,8 +13,8 @@ class ControllerPresense extends Controller
     public function page()
     {
         $page = array(
-            'nama' => 'presence',
-            'data' => Presensi::get(),
+            'name' => 'presence',
+            'data' => Presensi::with('isKaryawan')->get(),
             'delete' => false
         );
         return view('presence.index', compact('page'));
@@ -21,7 +23,9 @@ class ControllerPresense extends Controller
     public function createpg()
     {
         $page = array(
-            'nama' => 'presence',
+            'name' => 'presence',
+            'data' => Karyawan::get(),
+            'currentdate' => Carbon::createFromFormat('Y/m/d')->now(),
         );
         return view('presence.create', compact('page'));
     }
@@ -46,7 +50,7 @@ class ControllerPresense extends Controller
 
         Presensi::create([
             'karyawan_id' => request()->input('idKaryawan'),
-            'date' => request()->input('date'),
+            'tanggal' => request()->input('date'),
             'waktu_masuk' => request()->input('waktumasuk'),
             'waktu_keluar' => request()->input('waktukeluar')
         ]);
@@ -58,9 +62,10 @@ class ControllerPresense extends Controller
     {
         $page = array(
             'name' => 'presence',
-            'data' => Presensi::find($id)
+            'data' => Presensi::find($id),
+            'karyawan' => Karyawan::get()
         );
-        return view('prensence.update', compact('page'));
+        return view('presence.update', compact('page'));
     }
     public function update($id)
     {
@@ -82,7 +87,7 @@ class ControllerPresense extends Controller
 
         Presensi::where('id', $id)->update([
             'karyawan_id' => request()->input('idKaryawan'),
-            'date' => request()->input('date'),
+            'tanggal' => request()->input('date'),
             'waktu_masuk' => request()->input('waktumasuk'),
             'waktu_keluar' => request()->input('waktukeluar')
         ]);
@@ -93,9 +98,9 @@ class ControllerPresense extends Controller
     public function confirm($id)
     {
         $page = array(
-            'nama' => 'presence',
+            'name' => 'presence',
             'data' => Presensi::get(),
-            'delete' => false
+            'delete' => true
         );
         return view('presence.index', compact('page'));
     }
@@ -104,6 +109,6 @@ class ControllerPresense extends Controller
     {
         Presensi::where('id', $id)->delete();
 
-        return view('/presence')->with('success', 'Jadwal Prensensi berhasil untuk dihapus');
+        return redirect('/presence')->with('success', 'Jadwal Prensensi berhasil untuk dihapus');
     }
 }
