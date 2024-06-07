@@ -7,7 +7,8 @@
             <div class="alert alert-success w-25">{{ session('success') }}</div>
         @endif
         @if ($page['delete'] == true)
-            <div style="width:250px; background-color: var(--primary-color); border-radius: 20px;" class="d-flex flex-column text-white align-items-center py-4 mt-2">
+            <div style="width:250px; background-color: var(--primary-color); border-radius: 20px;"
+                class="d-flex flex-column text-white align-items-center py-4 mt-2">
                 <p>Apakah kamu yakin ingin <br> menghapus data ini</p>
                 <div style="width: 15%" class="d-flex justify-content-around w-100">
                     <a href="{{ url('/karyawan') }}" class="btn btn-primary">No</a>
@@ -20,9 +21,10 @@
         @endif
     </div>
     {{-- Content --}}
-    <div class="container-fluid">
-        <a href="{{ url('/presence/create') }}" class="btn btn-primary mt-4">Create</a>
-        <table class="table">
+    <div class="container-fluid mt-4">
+        <a href="{{ url('/presence/create') }}" class="btn btn-primary">Create</a>
+        <a href="{{ url('/presence/export') }}" class="btn btn-success">Export</a>
+        <table class="table mt-4">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -36,9 +38,9 @@
             <tbody>
                 @php
                 @endphp
-                @foreach ($page['data'] as $row)
+                @foreach ($page['data'] as $item => $row)
                     <tr>
-                        <td> {{ $loop->iteration }} </td>
+                        <td> {{ $item + $page['data']->firstItem() }} </td>
                         <td> {{ $row->isKaryawan->nama }} </td>
                         <td> {{ $row['tanggal'] }} </td>
                         <td> {{ $row['waktu_masuk'] }} </td>
@@ -51,5 +53,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div style="bottom: 0" class="d-flex position-absolute justify-content-center w-75">
+            {{ $page['data']->links() }}
+        </div>
     </div>
 @endsection

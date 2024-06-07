@@ -5,6 +5,8 @@ arrowleft = document.getElementById('arrowleft'),
 arrowright = document.getElementById('arrowright'),
 dropdownmenu = document.getElementById('menu'),
 info = document.querySelectorAll('.info-child'),
+jammasuk = document.getElementById('jammasuk'),
+jamkeluar = document.getElementById('jamkeluar'),
 user = document.getElementById('extendbtn');
 
 let infocolor = [
@@ -12,7 +14,20 @@ let infocolor = [
     '#ffd166',
     '#06d6a0',
 ];
+function removeSec(e){
+    let time = e.innerHTML;
+    let time_slice = time.split('');
+    for (let i = 0; i < 4; i++){
+        time_slice.pop()
+    }
+    let time_join = time_slice.join("");
+    e.innerHTML = time_join
+}
 
+if(jammasuk != null && jamkeluar != null){
+    removeSec(jammasuk);
+    removeSec(jamkeluar);
+}
 
 setTimeout(() => {
     alert.forEach(element => {

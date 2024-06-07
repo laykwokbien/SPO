@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\attendance;
 use App\Models\Karyawan;
 use App\Models\Presensi;
 use Carbon\Carbon;
@@ -14,7 +15,7 @@ class ControllerPresense extends Controller
     {
         $page = array(
             'name' => 'presence',
-            'data' => Presensi::with('isKaryawan')->get(),
+            'data' => Presensi::with('isKaryawan')->paginate(10),
             'delete' => false
         );
         return view('presence.index', compact('page'));
@@ -22,10 +23,14 @@ class ControllerPresense extends Controller
 
     public function createpg()
     {
+        $Carbon = new Carbon();
+        $currentdate = $Carbon::now()->toDateString();
+        $currettime = $Carbon::now()->toTimeString();
         $page = array(
             'name' => 'presence',
             'data' => Karyawan::get(),
-            'currentdate' => Carbon::createFromFormat('Y/m/d')->now(),
+            'currentdate' => $currentdate,
+            'currenttime' => $currettime
         );
         return view('presence.create', compact('page'));
     }
@@ -53,6 +58,14 @@ class ControllerPresense extends Controller
             'tanggal' => request()->input('date'),
             'waktu_masuk' => request()->input('waktumasuk'),
             'waktu_keluar' => request()->input('waktukeluar')
+        ]);
+
+        $id_karyawan = Karyawan::with('isAccount')->find(request()->input('idKaryawan'));
+        $id_user = $id_karyawan->isAccount->id;
+
+        attendance::create([
+            'user_id' => $id_user,
+            'date' => request()->input('date')
         ]);
 
         return redirect('/presence')->with('success', 'Jadwal Presensi berhasil untuk dibuat');
@@ -92,6 +105,14 @@ class ControllerPresense extends Controller
             'waktu_keluar' => request()->input('waktukeluar')
         ]);
 
+        $id_karyawan = Karyawan::with('isAccount')->find(request()->input('idKaryawan'));
+        $id_user = $id_karyawan->isAccount->id;
+
+        attendance::where('id', $id)->update([
+            'user_id' => $id_user,
+            'date' => request()->input('date')
+        ]);
+
         return redirect('/presence')->with('success', 'Jadwal Presensi berhasil untuk diperbarui');
     }
 
@@ -99,7 +120,7 @@ class ControllerPresense extends Controller
     {
         $page = array(
             'name' => 'presence',
-            'data' => Presensi::get(),
+            'data' => Presensi::with('isKaryawan')->paginate(10),
             'delete' => true
         );
         return view('presence.index', compact('page'));
@@ -108,6 +129,7 @@ class ControllerPresense extends Controller
     public function delete($id)
     {
         Presensi::where('id', $id)->delete();
+        attendance::where('id', $id)->delete();
 
         return redirect('/presence')->with('success', 'Jadwal Prensensi berhasil untuk dihapus');
     }

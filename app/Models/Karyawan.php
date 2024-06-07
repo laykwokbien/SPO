@@ -11,11 +11,13 @@ class Karyawan extends Model
 
     protected $guarded = ['id'];
 
-    public function presensis(){
+    public function presensis()
+    {
         return $this->hasMany(Presensi::class, 'karyawan_id');
     }
 
-    public function isAccount(){
+    public function isAccount()
+    {
         return $this->hasOne(Users::class, 'id');
     }
 }

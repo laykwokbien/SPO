@@ -26,7 +26,7 @@
             </div>
             <div class="mb-3">
                 <label for="date" class="form-label">Tanggal: </label>
-                <input type="date" name="date" id="date" class="form-control">
+                <input type="date" name="date" id="date" class="form-control" min="{{ $page['currentdate'] }}">
             </div>
             <div class="mb-3">
                 <label for="waktumasuk" class="form-label">Jam Masuk: </label>

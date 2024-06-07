@@ -13,7 +13,7 @@
     {{-- Content --}}
     <div class="container-fluid">
         <a href="{{ url('/karyawan/create') }}" class="btn btn-primary mt-4">Create</a>
-        <table class="table">
+        <table class="table mt-4">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -25,9 +25,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($page['data'] as $row)
+                @foreach ($page['data'] as $item => $row)
                     <tr>
-                        <td> {{ $loop->iteration }} </td>
+                        <td> {{ $item + $page['data']->firstItem() }} </td>
                         <td> {{ $row['nama'] }} </td>
                         <td> {{ $row['jabatan'] }} </td>
                         <td> {{ $row['email'] }} </td>
@@ -39,5 +39,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div style="bottom: 0" class="d-flex position-absolute justify-content-center w-75">
+            {{ $page['data']->links() }}
+        </div>
     </div>
 @endsection

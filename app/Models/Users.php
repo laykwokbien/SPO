@@ -13,7 +13,12 @@ class users extends Authenticatable
 
     protected $guarded = ['id'];
 
-    public function isData(){
+    public function isData()
+    {
         return $this->hasOne(Karyawan::class, 'password');
+    }
+    public function attendances()
+    {
+        return $this->hasMany(attendance::class, 'user_id');
     }
 }

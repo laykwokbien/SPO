@@ -14,7 +14,7 @@ class ControllerKaryawan extends Controller
     {
         $page = array(
             'name' => 'karyawan',
-            'data' => Karyawan::get(),
+            'data' => Karyawan::paginate(10),
         );
         return view('karyawan.index', compact('page'));
     }
@@ -45,11 +45,11 @@ class ControllerKaryawan extends Controller
         if ($validator->fails()) {
             return back()->with('alerts', $validator->messages()->get('*'));
         }
-        
+
         $users = users::get();
 
-        foreach($users as $user){
-            if(password_verify(request()->input('password'), $user->password)){
+        foreach ($users as $user) {
+            if (password_verify(request()->input('password'), $user->password)) {
                 $foreign = $user->id;
                 Karyawan::create([
                     'nama' => request()->input('nama'),
@@ -76,7 +76,7 @@ class ControllerKaryawan extends Controller
     {
         $karyawan = Karyawan::find($id);
 
-        if (Auth::user()->role == 'karyawan'){
+        if (Auth::user()->role == 'karyawan') {
             $validator = Validator::make(request()->all(), [
                 'nama' => 'required',
                 'jabatan' => 'required',
@@ -89,15 +89,15 @@ class ControllerKaryawan extends Controller
                 'email.unique' => 'Email ini sudah digunakan oleh Karyawan Lain',
                 'password.required' => 'Dimohon isi password'
             ]);
-    
+
             if ($validator->fails()) {
                 return back()->with('alerts', $validator->messages()->get('*'));
             }
-        
-            if(password_verify(request()->input('password'), $karyawan->password)){
+
+            if (password_verify(request()->input('password'), $karyawan->password)) {
                 return redirect()->with('false', 'Password salah silakan ulang lagi');
             }
-            
+
             Karyawan::where('id', $id)->update([
                 'nama' => request()->input('nama'),
                 'jabatan' => request()->input('jabatan'),
@@ -105,7 +105,7 @@ class ControllerKaryawan extends Controller
                 'password' => bcrypt(request()->input('password'))
             ]);
         }
-        if(Auth::user()->role == 'administrator'){
+        if (Auth::user()->role == 'administrator') {
             $validator = Validator::make(request()->all(), [
                 'nama' => 'required',
                 'jabatan' => 'required',
@@ -118,11 +118,11 @@ class ControllerKaryawan extends Controller
                 'email.required' => 'Dimohon isi Email Karyawan',
                 'email.unique' => 'Email ini sudah digunakan oleh Karyawan Lain',
             ]);
-    
+
             if ($validator->fails()) {
                 return back()->with('alerts', $validator->messages()->get('*'));
             }
-            
+
             Karyawan::where('id', $id)->update([
                 'nama' => request()->input('nama'),
                 'jabatan' => request()->input('jabatan'),

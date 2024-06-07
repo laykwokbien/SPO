@@ -10,7 +10,7 @@
     {{-- Content --}}
     <div class="container-fluid">
         <a href="{{ url('/register') }}" class="btn btn-primary mt-4"><i class="bi bi-person-fill-add"></i> Create</a>
-        <table class="table">
+        <table class="table mt-4">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -23,20 +23,41 @@
             </thead>
             <tbody>
                 @foreach ($page['data'] as $row)
-                    @if ($row->isData != null)
                     <tr>
                         <td> {{ $loop->iteration }} </td>
                         <td> {{ $row->username }} </td>
-                        <td> {{ $row->isData->email }} </td>
-                        <td> {{ $row->isData->jabatan }} </td>
-                        <td> {{ $row->isData->status }} </td>
                         <td>
-                            <a href="/user/update/{{ $row['id'] }}" class="btn btn-warning">Update</a>
+                            @if ($row->isData != null)
+                                {{ $row->isData->email }}
+                            @else
+                                {{ 'NOT REGISTERED' }}
+                            @endif
+                        </td>
+                        <td>
+                            @if ($row->isData != null)
+                                {{ $row->isData->jabatan }}
+                            @else
+                                {{ 'NOT REGISTERED' }}
+                            @endif
+                        </td>
+                        <td>
+                            @if ($row->isData != null)
+                                {{ $row->isData->status }}
+                            @else
+                                {{ 'NOT REGISTERED' }}
+                            @endif
+                        </td>
+                        </td>
+                        <td>
+                            <a href="/user/update/{{ $row['id'] }}"
+                                class="btn btn-warning @if ($row->isData == null) {{ 'disabled' }} @endif">Update</a>
                         </td>
                     </tr>
-                    @endif
                 @endforeach
             </tbody>
         </table>
+        <div style="bottom: 0" class="d-flex position-absolute justify-content-center w-75">
+            {{ $page['data']->links() }}
+        </div>
     </div>
 @endsection

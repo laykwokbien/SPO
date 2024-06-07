@@ -53,11 +53,13 @@
 }
 
 /* NavBar */
-nav{
+.nav{
     height: 100vh;
     padding: 0 5px;
     width: 140px;
     background-color: var(--secondary-color);
+    color: black;
+    font-size: 14px;
 }
 
 .nav-brand img{
@@ -118,7 +120,7 @@ nav{
 }
 
 @media only screen and (max-width:768px) {
-    nav{
+    .nav{
     }
 }
 /* Dashboard */
@@ -150,6 +152,14 @@ nav{
     .currentschedule{
         padding: 20px 50px;
     }
+}
+/* Jadwal */
+.personaldata{
+    background-color: var(--primary-color);
+    height: 25%;
+    padding: 20px 20px;
+    color: var(--quadary-color);
+    border-radius: 20px;
 }
 
 /* CRUD */
