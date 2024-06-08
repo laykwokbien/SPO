@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/hadir/{id}', [ControllerAttendance::class, 'hadirmasuk']);
     Route::post('/keluar/{id}', [ControllerAttendance::class, 'keluar']);
 
+    Route::get('/sendmail', [ControllerAttendance::class, 'sendMail']);
+
     Route::get('/karyawan', [ControllerKaryawan::class, 'page']);
     Route::get('/karyawan/update/{id}', [ControllerKaryawan::class, 'updatepg']);
     Route::post('/karyawan/update/{id}', [ControllerKaryawan::class, 'update']);

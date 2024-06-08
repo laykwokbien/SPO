@@ -103,7 +103,7 @@ class ControllerUser extends Controller
     {
         if (Auth::attempt(['username' => request()->input('username'), 'password' => request()->input('password')])) {
             request()->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/sendmail');
         }
 
         return redirect('/')->with('fail', 'Username atau Password Salah');
@@ -121,6 +121,7 @@ class ControllerUser extends Controller
             'currentdate' => $currentday,
             'carbon' => $Carbon
         );
+
         return view('dashboard.index', compact('page'));
     }
 
