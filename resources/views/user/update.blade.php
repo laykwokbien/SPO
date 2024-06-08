@@ -35,6 +35,16 @@
                 <input type="email" class="form-control" name="email" id="email"
                     value="{{ $page['data']->isData->email }}">
             </div>
+            @if (Auth::user()->role == 'administrator')
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status: </label>
+                    <select name="status" id="status" class="form-select">
+                        <option @if ($page['data']->status == 'Active') {{ 'selected' }} @endif value="Active">Active</option>
+                        <option @if ($page['data']->status == 'Inactive') {{ 'selected' }} @endif value="Inactive">Inactive
+                        </option>
+                    </select>
+                </div>
+            @endif
             <button class="btn btn-primary" type="submit" id="submit">Perbarui</button>
         </form>
     </div>

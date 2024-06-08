@@ -52,24 +52,31 @@ class ControllerAttendance extends Controller
         $karyawans = Karyawan::with('isAccount')->get();
         $Carbon = new Carbon();
         $yesterday = $Carbon::yesterday()->toDateString();
-        foreach ($attendances as $attendance) {
-            // dd($attendance->time_in == null || $attendance->time_out == null);
-            if ($attendance->isUser->id == Auth::user()->id) {
-                foreach ($karyawans as $karyawan) {
-                    if ($karyawan->isAccount->id == Auth::user()->id) {
-                        $nama = $karyawan->nama;
-                        $tanggal = $karyawan->date;
+        if ($attendances != null) {
+            foreach ($attendances as $attendance) {
+                if ($attendance->isUser->id == Auth::user()->id && $attendance->date == $yesterday) {
+                    if ($attendance->time_in == null || $attendance->time_out == null) {
+                        foreach ($karyawans as $karyawan) {
+                            if ($karyawan->isAccount->id == Auth::user()->id) {
+                                $nama = $karyawan->nama;
+                                $tanggal = $karyawan->date;
 
-                        Mail::to($karyawan->email)->send(new Attendances($nama, $tanggal));
+                                Mail::to($karyawan->email)->send(new Attendances($nama));
 
-                        return redirect('/dashboard')->with('messages', 'Mail telah terkirim pada gmail anda');
+                                return redirect('/dashboard')->with('messages', 'Mail telah terkirim pada gmail anda');
+                            } else {
+                                return redirect('/dashboard');
+                            }
+                        }
                     } else {
                         return redirect('/dashboard');
                     }
+                } else {
+                    return redirect('/dashboard');
                 }
-            } else {
-                return redirect('/dashboard');
             }
+        } else {
+            return redirect('/dashboard');
         }
     }
 }

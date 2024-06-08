@@ -1,10 +1,10 @@
 @extends('template.master')
 
 @section('content')
-    <div class="container row mt-3 gap-2 d-flex justify-content-center">
+    <div class="container row mt-sm-3 mt-5 gap-2 d-flex justify-content-center">
         <div class="col-12">
             <p class="display-6">Jadwal Presensi</p>
-            <table class="table table-info table-striped">
+            <table class="table table-info table-responsive">
                 <thead>
                     <th scope="col">#</th>
                     <th scope="col">Tanggal</th>
@@ -27,7 +27,7 @@
         </div>
         <div class="col-12">
             <p class="display-6">Jadwal Hadir</p>
-            <table class="table table-info striped">
+            <table class="table table-info table-responsive">
                 <thead>
                     <th scope="col">#</th>
                     <th scope="col">Tanggal</th>

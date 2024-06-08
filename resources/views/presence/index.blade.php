@@ -21,40 +21,42 @@
         @endif
     </div>
     {{-- Content --}}
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mt-5 mt-sm-4">
         <a href="{{ url('/presence/create') }}" class="btn btn-primary">Create</a>
         <a href="{{ url('/presence/export') }}" class="btn btn-success">Export</a>
-        <table class="table mt-4">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama Karyawan</th>
-                    <th scope="col">Tanggal</th>
-                    <th scope="col">Jam Masuk</th>
-                    <th scope="col">Jam Keluar</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                @endphp
-                @foreach ($page['data'] as $item => $row)
+        <div class="table-responsive">
+            <table class="table table mt-4">
+                <thead>
                     <tr>
-                        <td> {{ $item + $page['data']->firstItem() }} </td>
-                        <td> {{ $row->isKaryawan->nama }} </td>
-                        <td> {{ $row['tanggal'] }} </td>
-                        <td> {{ $row['waktu_masuk'] }} </td>
-                        <td> {{ $row['waktu_keluar'] }} </td>
-                        <td>
-                            <a href="/presence/update/{{ $row['id'] }}" class="btn btn-warning">Update</a>
-                            <a href="/presence/delete/{{ $row['id'] }}" class="btn btn-danger">Delete</a>
-                        </td>
+                        <th scope="col">#</th>
+                        <th scope="col">Nama Karyawan</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Jam Masuk</th>
+                        <th scope="col">Jam Keluar</th>
+                        <th scope="col">Action</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <div style="bottom: 0" class="d-flex position-absolute justify-content-center w-75">
-            {{ $page['data']->links() }}
+                </thead>
+                <tbody>
+                    @php
+                    @endphp
+                    @foreach ($page['data'] as $item => $row)
+                        <tr>
+                            <td> {{ $item + $page['data']->firstItem() }} </td>
+                            <td> {{ $row->isKaryawan->nama }} </td>
+                            <td> {{ $row['tanggal'] }} </td>
+                            <td> {{ $row['waktu_masuk'] }} </td>
+                            <td> {{ $row['waktu_keluar'] }} </td>
+                            <td>
+                                <a href="/presence/update/{{ $row['id'] }}" class="btn btn-warning">Update</a>
+                                <a href="/presence/delete/{{ $row['id'] }}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div style="bottom: 0" class="d-flex position-absolute justify-content-center w-75">
+                {{ $page['data']->links() }}
+            </div>
         </div>
     </div>
 @endsection

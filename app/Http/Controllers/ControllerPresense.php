@@ -73,10 +73,13 @@ class ControllerPresense extends Controller
 
     public function updatepg($id)
     {
+        $Carbon = new Carbon();
+        $currentdate = $Carbon::now()->toDateString();
         $page = array(
             'name' => 'presence',
             'data' => Presensi::find($id),
-            'karyawan' => Karyawan::get()
+            'karyawan' => Karyawan::get(),
+            'currentdate' => $currentdate,
         );
         return view('presence.update', compact('page'));
     }

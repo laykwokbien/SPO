@@ -15,7 +15,12 @@
     <header class="position-relative">
         @if ($page['name'] != 'auth' && $page['name'] != 'home')
             @if (Auth::check())
-                <nav class="d-flex flex-column align-items-center nav">
+                <div id="burger" class="burger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <nav class="d-sm-flex flex-column align-items-center nav">
                     <div class="nav-brand mb-3 mt-2"><img
                             src="{{ asset('assets/images/company_logo_no_background.png') }}" alt=""></div>
                     <ul style="margin: 0; padding: 0" class="nav-list d-flex flex-column gap-4 text-center w-100">

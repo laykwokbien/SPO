@@ -42,7 +42,7 @@ class ControllerUser extends Controller
             'password' => bcrypt(request()->input('password'))
         ]);
 
-        return redirect('/')->with('success', 'Akun telah berhasil untuk dibuat');
+        return redirect('/manage')->with('success', 'Akun telah berhasil untuk dibuat');
     }
 
     public function updatepg($id)
@@ -103,7 +103,7 @@ class ControllerUser extends Controller
     {
         if (Auth::attempt(['username' => request()->input('username'), 'password' => request()->input('password')])) {
             request()->session()->regenerate();
-            return redirect()->intended('/sendmail');
+            return redirect()->intended('/dashboard');
         }
 
         return redirect('/')->with('fail', 'Username atau Password Salah');
@@ -113,12 +113,15 @@ class ControllerUser extends Controller
     {
         $Carbon = new Carbon();
         $currentday = $Carbon::now()->toDateString();
+        $yesterday = $Carbon::yesterday()->toDateString();
         $page = array(
             'name' => 'dashboard',
             'user' => users::with('isData')->get(),
             'karyawan' => Karyawan::with('presensis')->get(),
             'presensi' => Presensi::with('isKaryawan')->get(),
+            'attendance' => attendance::with('isUser')->get(),
             'currentdate' => $currentday,
+            'yesterday' => $yesterday,
             'carbon' => $Carbon
         );
 

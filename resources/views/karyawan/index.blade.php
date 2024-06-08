@@ -11,36 +11,38 @@
         @endif
     </div>
     {{-- Content --}}
-    <div class="container-fluid">
+    <div class="container-fluid mt-5">
         <a href="{{ url('/karyawan/create') }}" class="btn btn-primary mt-4">Create</a>
-        <table class="table mt-4">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Jabatan</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($page['data'] as $item => $row)
+        <div class="table-responsive">
+            <table class="table mt-4 w-100">
+                <thead>
                     <tr>
-                        <td> {{ $item + $page['data']->firstItem() }} </td>
-                        <td> {{ $row['nama'] }} </td>
-                        <td> {{ $row['jabatan'] }} </td>
-                        <td> {{ $row['email'] }} </td>
-                        <td> {{ $row['status'] }} </td>
-                        <td>
-                            <a href="/karyawan/update/{{ $row['id'] }}" class="btn btn-warning">Update</a>
-                        </td>
+                        <th scope="col">#</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Jabatan</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <div style="bottom: 0" class="d-flex position-absolute justify-content-center w-75">
-            {{ $page['data']->links() }}
+                </thead>
+                <tbody>
+                    @foreach ($page['data'] as $item => $row)
+                        <tr>
+                            <td> {{ $item + $page['data']->firstItem() }} </td>
+                            <td> {{ $row['nama'] }} </td>
+                            <td> {{ $row['jabatan'] }} </td>
+                            <td> {{ $row['email'] }} </td>
+                            <td> {{ $row['status'] }} </td>
+                            <td>
+                                <a href="/karyawan/update/{{ $row['id'] }}" class="btn btn-warning">Update</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div style="bottom: 0" class="d-flex position-absolute justify-content-center w-75">
+                {{ $page['data']->links() }}
+            </div>
         </div>
     </div>
 @endsection
